@@ -21,7 +21,7 @@ export default function OfferModal({ req, onClose }) {
     setSending(true)
     setError('')
     try {
-      await sendOffer(req.id)
+      await sendOffer(req.id, { price: Number(price), qty: supply, message: message || undefined })
       setSent(true)
     } catch (err) {
       setError(err.message)

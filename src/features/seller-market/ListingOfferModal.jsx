@@ -21,7 +21,7 @@ export default function ListingOfferModal({ crop, onClose }) {
     setSending(true)
     setError('')
     try {
-      await sendOffer(crop.id)
+      await sendOffer(crop.id, { price: Number(price), qty, message: message || undefined })
       setSent(true)
     } catch (err) {
       setError(err.message)

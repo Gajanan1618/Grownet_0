@@ -52,8 +52,10 @@ export const api = {
   confirmEmail: () => request('/users/me/email/confirm', { method: 'POST' }),
   listListings: () => request('/listings'),
   createListing: (body) => request('/listings', { method: 'POST', body }),
-  offerOnListing: (id) => request(`/listings/${id}/offers`, { method: 'POST' }),
+  offerOnListing: (id, body) => request(`/listings/${id}/offers`, { method: 'POST', body }),
   listRequirements: () => request('/requirements'),
   createRequirement: (body) => request('/requirements', { method: 'POST', body }),
-  offerOnRequirement: (id) => request(`/requirements/${id}/offers`, { method: 'POST' }),
+  offerOnRequirement: (id, body) => request(`/requirements/${id}/offers`, { method: 'POST', body }),
+  listReceivedOffers: () => request('/offers'),
+  respondToOffer: (id, status) => request(`/offers/${id}`, { method: 'PATCH', body: { status } }),
 }

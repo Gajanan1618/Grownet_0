@@ -23,8 +23,8 @@ export function ListingsProvider({ children }) {
     return listing
   }, [])
 
-  const sendOffer = useCallback(async (id) => {
-    const { listing } = await api.offerOnListing(id)
+  const sendOffer = useCallback(async (id, offerDetails) => {
+    const { listing } = await api.offerOnListing(id, offerDetails)
     setListings((prev) => prev.map((l) => (l.id === id ? listing : l)))
   }, [])
 

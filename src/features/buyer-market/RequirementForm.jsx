@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Modal from '../../components/Modal.jsx'
 import SectionLabel from '../../components/SectionLabel.jsx'
 import { Field, inputClass } from '../../components/FormField.jsx'
@@ -93,13 +94,13 @@ export default function RequirementForm({ open, onClose }) {
             12,000+ farmers can now see what you need. You&rsquo;ll be notified as offers come in —
             average response time is 4 hours.
           </p>
-          <a
-            href="#board"
+          <Link
+            to="/grow-it"
             onClick={handleClose}
             className="mt-6 block w-full rounded-full bg-forest py-3 text-[13.5px] font-semibold text-parchment transition hover:bg-forest-dark"
           >
             View the buyer board →
-          </a>
+          </Link>
         </div>
       </Modal>
     )

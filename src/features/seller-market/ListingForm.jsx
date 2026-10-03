@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Modal from '../../components/Modal.jsx'
 import SectionLabel from '../../components/SectionLabel.jsx'
 import { Field, inputClass } from '../../components/FormField.jsx'
@@ -127,13 +128,13 @@ export default function ListingForm({ open, onClose }) {
             {form.cropName} is now visible to verified buyers in Fresh Arrivals.
             You&rsquo;ll be notified the moment an offer comes in.
           </p>
-          <a
-            href="#listings"
+          <Link
+            to="/buy-it"
             onClick={handleClose}
             className="mt-6 block w-full rounded-full bg-forest py-3 text-[13.5px] font-semibold text-parchment transition hover:bg-forest-dark"
           >
             View it in Fresh Arrivals →
-          </a>
+          </Link>
         </div>
       </Modal>
     )
