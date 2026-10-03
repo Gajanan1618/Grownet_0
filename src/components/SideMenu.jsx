@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import ChatModal from '../features/chat/ChatModal.jsx'
 
 function initials(name = '') {
@@ -13,17 +15,17 @@ function initials(name = '') {
     .toUpperCase()
 }
 
-const LINKS = [
-  { href: '#top', icon: '🏠', label: 'Home' },
-  { href: '#listings', icon: '🌿', label: 'Browse Produce' },
-  { href: '#board', icon: '📋', label: 'Buyer Board' },
-  { href: '#sell', icon: '🌾', label: 'Sell Produce' },
-  { href: '#how', icon: '❓', label: 'How It Works' },
-]
-
 export default function SideMenu({ open, onClose }) {
   const { isAuthenticated, user, openAuthModal, openProfileModal } = useAuth()
+  const { t } = useLanguage()
+  const navigate = useNavigate()
   const [chatOpen, setChatOpen] = useState(false)
+
+  const LINKS = [
+    { to: '/', icon: '🏠', label: t('nav_home') },
+    { to: '/grow-it', icon: '🌿', label: t('nav_grow') },
+    { to: '/buy-it', icon: '🛒', label: t('nav_buy') },
+  ]
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
@@ -32,12 +34,9 @@ export default function SideMenu({ open, onClose }) {
     }
   }, [open])
 
-  function goTo(href) {
+  function goTo(to) {
     onClose()
-    // let the drawer close before the browser jumps to the anchor
-    setTimeout(() => {
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
-    }, 150)
+    navigate(to)
   }
 
   function handleProfileClick() {
@@ -107,8 +106,8 @@ export default function SideMenu({ open, onClose }) {
         <nav className="mt-5 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-3">
           {LINKS.map((l) => (
             <button
-              key={l.href}
-              onClick={() => goTo(l.href)}
+              key={l.to}
+              onClick={() => goTo(l.to)}
               className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[13.5px] font-medium text-ink-soft transition hover:bg-forest/10 hover:text-forest"
             >
               <span className="text-base">{l.icon}</span>

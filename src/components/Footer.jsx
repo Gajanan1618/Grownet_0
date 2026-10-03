@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom'
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 const SOCIALS = [
   { label: 'Facebook', glyph: 'f' },
   { label: 'Instagram', glyph: '◎' },
@@ -9,10 +12,9 @@ const COLUMNS = [
   {
     title: 'Platform',
     links: [
-      { label: 'Browse Produce', href: '#listings' },
-      { label: 'Sell Produce', href: '#sell' },
-      { label: 'How It Works', href: '#how' },
-      { label: "Today's Mandi Prices", href: '#top' },
+      { label: 'I Buy It — Browse Produce', to: '/buy-it' },
+      { label: 'I Grow It — Sell Produce', to: '/grow-it' },
+      { label: "Today's Mandi Prices", to: '/' },
     ],
   },
   {
@@ -59,6 +61,7 @@ function AppBadge({ platform, label, sub }) {
 }
 
 export default function Footer() {
+  const { t } = useLanguage()
   return (
     <footer className="bg-forest-dark text-parchment/75">
       <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
@@ -72,8 +75,7 @@ export default function Footer() {
               <span className="font-display text-xl font-semibold text-parchment">GrowNet</span>
             </div>
             <p className="mt-4 max-w-xs text-[13.5px] leading-relaxed text-parchment/60">
-              Connecting verified farmers directly with buyers — fair mandi-linked
-              prices, transparent deals, no one standing in between.
+              {t('footer_tagline')}
             </p>
             <div className="mt-5 flex gap-2">
               {SOCIALS.map((s) => (
@@ -90,12 +92,12 @@ export default function Footer() {
               <ul className="mt-4 space-y-2.5">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <a
-                      href={l.href}
+                    <Link
+                      to={l.to}
                       className="text-[13.5px] text-parchment/65 transition hover:text-parchment"
                     >
                       {l.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>

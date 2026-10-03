@@ -24,8 +24,8 @@ export function RequirementsProvider({ children }) {
     return requirement
   }, [])
 
-  const sendOffer = useCallback(async (id) => {
-    const { requirement } = await api.offerOnRequirement(id)
+  const sendOffer = useCallback(async (id, offerDetails) => {
+    const { requirement } = await api.offerOnRequirement(id, offerDetails)
     setRequirements((prev) => prev.map((r) => (r.id === id ? withPosted(requirement) : r)))
   }, [])
 
