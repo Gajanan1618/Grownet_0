@@ -31,9 +31,14 @@ export default {
         line: '#DDD2B8',
       },
       fontFamily: {
-        display: ['Fraunces', 'ui-serif', 'Georgia', 'serif'],
-        body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        // Neither Fraunces, Inter, nor IBM Plex Mono cover Devanagari glyphs —
+        // appending a Devanagari font at the end of each stack means Latin
+        // text still renders in the brand font, while any Hindi/Marathi
+        // characters automatically fall through to a font that actually
+        // supports them, instead of an inconsistent OS fallback.
+        display: ['Fraunces', '"Noto Serif Devanagari"', 'ui-serif', 'Georgia', 'serif'],
+        body: ['Inter', '"Noto Sans Devanagari"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', '"Noto Sans Devanagari"', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         card: '18px',
@@ -52,10 +57,20 @@ export default {
           '20%, 60%': { transform: 'translateX(-6px)' },
           '40%, 80%': { transform: 'translateX(6px)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        slideUp: {
+          '0%': { opacity: '0', transform: 'translateY(28px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
         shake: 'shake 0.4s ease',
+        float: 'float 5s ease-in-out infinite',
+        'slide-up': 'slideUp 0.8s cubic-bezier(0.2,0.8,0.3,1) both',
       },
     },
   },

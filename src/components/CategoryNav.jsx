@@ -1,4 +1,7 @@
+import { useLanguage } from '../context/LanguageContext.jsx'
+
 export default function CategoryNav({ categories, active, onChange }) {
+  const { t } = useLanguage()
   return (
     <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter produce by category">
       {categories.map((c) => {
@@ -17,7 +20,7 @@ export default function CategoryNav({ categories, active, onChange }) {
             }
           >
             <span aria-hidden="true">{c.icon}</span>
-            {c.label}
+            {t(`cat_${c.id}`)}
           </button>
         )
       })}
