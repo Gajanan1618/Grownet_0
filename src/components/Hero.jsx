@@ -34,7 +34,7 @@ export default function Hero() {
                   {t('grow_card_title')}
                 </h2>
                 <p className="mt-2 text-sm text-parchment/75">
-                  Free listing · payout within 48 hours of delivery
+                  {t('hero_door_grow_sub')}
                 </p>
               </div>
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-parchment/15 text-lg transition group-hover:translate-x-1 group-hover:bg-parchment/25">
@@ -56,7 +56,7 @@ export default function Hero() {
                   {t('buy_card_title')}
                 </h2>
                 <p className="mt-2 text-sm text-ink-soft">
-                  Browse today&rsquo;s arrivals · deal direct, no queue
+                  {t('hero_door_buy_sub')}
                 </p>
               </div>
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-clay/10 text-lg text-clay transition group-hover:translate-x-1 group-hover:bg-clay/20">
@@ -70,7 +70,7 @@ export default function Hero() {
           to="/buy-it"
           className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-clay hover:underline"
         >
-          Looking for something specific? Post a requirement instead →
+          {t('hero_board_link')}
         </Link>
       </div>
     </section>

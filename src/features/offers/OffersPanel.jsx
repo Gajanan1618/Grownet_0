@@ -1,6 +1,7 @@
 import { createPortal } from 'react-dom'
 import { useEffect, useState } from 'react'
 import { useOffers } from '../../context/OffersContext.jsx'
+import { useLanguage } from '../../context/LanguageContext.jsx'
 
 function timeAgo(iso) {
   const mins = Math.floor((Date.now() - new Date(iso).getTime()) / 60000)
@@ -12,6 +13,7 @@ function timeAgo(iso) {
 }
 
 function OfferRow({ offer, onRespond }) {
+  const { t } = useLanguage()
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const isListing = offer.targetType === 'listing'
@@ -34,7 +36,7 @@ function OfferRow({ offer, onRespond }) {
         <div className="min-w-0">
           <p className="truncate text-[13.5px] font-semibold text-ink">
             {offer.fromUserName}
-            <span className="font-normal text-ink-soft"> {isListing ? 'offered on' : 'offered to supply'}</span>
+            <span className="font-normal text-ink-soft"> {isListing ? t('offer_on_listing') : t('offer_on_requirement')}</span>
           </p>
           <p className="truncate text-[13px] text-ink-soft">{offer.targetTitle}</p>
         </div>
@@ -55,14 +57,14 @@ function OfferRow({ offer, onRespond }) {
             disabled={busy}
             className="flex-1 rounded-full bg-forest py-1.5 text-[12.5px] font-semibold text-parchment transition hover:bg-forest-dark disabled:opacity-60"
           >
-            Accept
+            {t('offers_accept')}
           </button>
           <button
             onClick={() => act('declined')}
             disabled={busy}
             className="flex-1 rounded-full border border-line py-1.5 text-[12.5px] font-semibold text-ink-soft transition hover:border-clay hover:text-clay disabled:opacity-60"
           >
-            Decline
+            {t('offers_decline')}
           </button>
         </div>
       ) : (
@@ -72,7 +74,7 @@ function OfferRow({ offer, onRespond }) {
             (offer.status === 'accepted' ? 'bg-forest/10 text-forest' : 'bg-clay/10 text-clay')
           }
         >
-          {offer.status}
+          {offer.status === 'accepted' ? t('offers_status_accepted') : t('offers_status_declined')}
         </p>
       )}
     </div>
@@ -81,6 +83,7 @@ function OfferRow({ offer, onRespond }) {
 
 export default function OffersPanel() {
   const { offers, panelOpen, closePanel, respond, refresh } = useOffers()
+  const { t } = useLanguage()
 
   useEffect(() => {
     if (panelOpen) refresh()
@@ -106,7 +109,7 @@ export default function OffersPanel() {
     >
       <div className="flex h-full w-full max-w-[420px] flex-col bg-parchment shadow-soft">
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
-          <h2 className="font-display text-lg font-semibold text-ink">Offers</h2>
+          <h2 className="font-display text-lg font-semibold text-ink">{t('offers_panel_title')}</h2>
           <button
             onClick={closePanel}
             aria-label="Close"
@@ -120,9 +123,9 @@ export default function OffersPanel() {
           {offers.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center text-ink-soft">
               <span className="mb-2 text-3xl">📭</span>
-              <p className="text-[13.5px]">No offers yet</p>
+              <p className="text-[13.5px]">{t('offers_panel_empty_title')}</p>
               <p className="mt-1 text-[12.5px] text-ink-faint">
-                You&rsquo;ll see offers here when a buyer or farmer responds to your listings and requirements.
+                {t('offers_panel_empty_sub')}
               </p>
             </div>
           ) : (
@@ -130,7 +133,7 @@ export default function OffersPanel() {
               {pending.length > 0 && (
                 <div>
                   <p className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink-soft">
-                    Needs your response ({pending.length})
+                    {t('offers_panel_pending')} ({pending.length})
                   </p>
                   <div className="space-y-2.5">
                     {pending.map((o) => (
@@ -142,7 +145,7 @@ export default function OffersPanel() {
               {resolved.length > 0 && (
                 <div>
                   <p className="mb-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-ink-soft">
-                    Earlier
+                    {t('offers_panel_earlier')}
                   </p>
                   <div className="space-y-2.5">
                     {resolved.map((o) => (

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext.jsx'
+import { useLanguage } from '../context/LanguageContext.jsx'
 import ListingForm from '../features/seller-market/ListingForm.jsx'
 
 export default function SellPanel() {
   const { isAuthenticated, user, openAuthModal } = useAuth()
+  const { t } = useLanguage()
   const isFarmer = isAuthenticated && user.roles.includes('farmer')
   const [formOpen, setFormOpen] = useState(false)
 
@@ -21,14 +23,13 @@ export default function SellPanel() {
       <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-5 md:flex-row md:items-center md:justify-between md:px-8">
         <div className="max-w-lg">
           <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-turmeric">
-            For farmers
+            {t('sell_eyebrow')}
           </span>
           <h2 className="mt-2 font-display text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-            List your harvest in under five minutes
+            {t('sell_title')}
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-parchment/75">
-            No commission for your first six months. Add a photo, set your price,
-            and verified buyers start reaching out the same day.
+            {t('sell_sub')}
           </p>
         </div>
 
@@ -54,7 +55,7 @@ export default function SellPanel() {
           ) : (
             <>
               <label className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-wider text-parchment/60">
-                Your name
+                {t('sell_name_label')}
               </label>
               <input
                 type="text"
@@ -62,7 +63,7 @@ export default function SellPanel() {
                 className="mb-4 w-full rounded-lg border border-parchment/20 bg-parchment/10 px-4 py-2.5 text-sm text-parchment placeholder:text-parchment/40 focus:border-turmeric focus:outline-none"
               />
               <label className="mb-1.5 block font-mono text-[11px] font-semibold uppercase tracking-wider text-parchment/60">
-                WhatsApp number
+                {t('sell_phone_label')}
               </label>
               <input
                 type="tel"
@@ -75,7 +76,7 @@ export default function SellPanel() {
             type="submit"
             className="w-full rounded-full bg-turmeric py-3 text-[13.5px] font-semibold text-forest-dark transition hover:bg-turmeric-light"
           >
-            {isAuthenticated ? 'Continue to listing details →' : 'Start my free listing →'}
+            {isAuthenticated ? t('sell_cta_authed') : t('sell_cta_guest')}
           </button>
         </form>
       </div>

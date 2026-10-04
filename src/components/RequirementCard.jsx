@@ -1,6 +1,12 @@
 import { URGENCY } from '../data/requirements.js'
 import { useLanguage } from '../context/LanguageContext.jsx'
 
+// Urgency and quality are fixed sets chosen from RequirementForm's dropdowns
+// (not free text), so translate by value with a safe fallback to the raw
+// stored string for anything unexpected.
+const URGENCY_KEY = { normal: 'urgency_normal', soon: 'urgency_soon', urgent: 'urgency_urgent' }
+const QUALITY_KEY = { Standard: 'grade_standard', Good: 'grade_good', Premium: 'grade_premium', Organic: 'grade_organic' }
+
 function ini(name) {
   return name.split(' ').filter(Boolean).map((w) => w[0]).join('').slice(0, 2).toUpperCase()
 }
@@ -43,7 +49,7 @@ export default function RequirementCard({ req, onSendOffer }) {
             <span className="w-4 text-center text-forest">📦</span> {req.qty.toLocaleString()} {req.unit} {t('card_needed')}
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-4 text-center text-clay">⭐</span> {req.quality}
+            <span className="w-4 text-center text-clay">⭐</span> {QUALITY_KEY[req.quality] ? t(QUALITY_KEY[req.quality]) : req.quality}
           </span>
         </div>
 
@@ -62,7 +68,7 @@ export default function RequirementCard({ req, onSendOffer }) {
         <div className="mt-auto flex items-center justify-between gap-2 border-t border-dashed border-line pt-3">
           <div className="flex items-center gap-2">
             <span className={`rounded-full border px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-wide ${urg.badge}`}>
-              {urg.label}
+              {t(`${URGENCY_KEY[req.urgency]}_label`)}
             </span>
             <span className="text-[11.5px] font-medium text-ink-soft">
               <b className="text-ink">{req.offers}</b> {t('card_offers')}

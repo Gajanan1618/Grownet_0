@@ -48,15 +48,14 @@ export default function BuyRequirementCTA() {
             </div>
           ) : (
             <p className="mb-5 text-[13.5px] leading-relaxed text-parchment/80">
-              Log in to post what you need — verified farmers with matching produce will send
-              you an offer directly.
+              {t('buy_cta_guest_msg')}
             </p>
           )}
           <button
             type="submit"
             className="w-full rounded-full bg-turmeric py-3 text-[13.5px] font-semibold text-forest-dark transition hover:bg-turmeric-light"
           >
-            {isAuthenticated ? 'Post my requirement →' : 'Log in to post →'}
+            {isAuthenticated ? t('buy_cta_submit_authed') : t('buy_cta_submit_guest')}
           </button>
         </form>
       </div>

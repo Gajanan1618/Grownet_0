@@ -1,3 +1,5 @@
+import Reveal from './Reveal.jsx'
+
 const STEPS = [
   {
     n: '01',
@@ -37,8 +39,8 @@ export default function HowItWorks() {
         </h2>
 
         <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-card border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s) => (
-            <div key={s.n} className="flex flex-col gap-3 bg-white p-6">
+          {STEPS.map((s, i) => (
+            <Reveal key={s.n} delay={i * 90} className="flex flex-col gap-3 bg-white p-6">
               <span className="font-mono text-xs font-semibold text-turmeric-dark">{s.n}</span>
               <h3 className="font-display text-xl font-semibold text-ink">{s.title}</h3>
               <div className="mt-1 space-y-2 text-[13px] leading-relaxed">
@@ -51,7 +53,7 @@ export default function HowItWorks() {
                   {s.buyer}
                 </p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>

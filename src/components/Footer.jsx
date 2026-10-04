@@ -8,33 +8,36 @@ const SOCIALS = [
   { label: 'X', glyph: '✕' },
 ]
 
-const COLUMNS = [
-  {
-    title: 'Platform',
-    links: [
-      { label: 'I Buy It — Browse Produce', to: '/buy-it' },
-      { label: 'I Grow It — Sell Produce', to: '/grow-it' },
-      { label: "Today's Mandi Prices", to: '/' },
-    ],
-  },
-  {
-    title: 'Support',
-    links: [
-      { label: 'Contact Us', href: '#' },
-      { label: 'FAQs', href: '#' },
-      { label: 'Help Center', href: '#' },
-      { label: 'Report an Issue', href: '#' },
-    ],
-  },
-  {
-    title: 'Legal',
-    links: [
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
-      { label: 'Refund & Escrow Policy', href: '#' },
-    ],
-  },
-]
+// Built inside the component (not module scope) since labels depend on t().
+function buildColumns(t) {
+  return [
+    {
+      title: t('footer_col_platform'),
+      links: [
+        { label: t('nav_buy') + ' — ' + t('listings_eyebrow'), to: '/buy-it' },
+        { label: t('nav_grow') + ' — ' + t('sell_eyebrow'), to: '/grow-it' },
+        { label: "Today's Mandi Prices", to: '/' },
+      ],
+    },
+    {
+      title: t('footer_col_support'),
+      links: [
+        { label: t('footer_contact'), href: '#' },
+        { label: t('footer_faqs'), href: '#' },
+        { label: t('footer_help'), href: '#' },
+        { label: t('footer_report'), href: '#' },
+      ],
+    },
+    {
+      title: t('footer_col_legal'),
+      links: [
+        { label: t('footer_privacy'), href: '#' },
+        { label: t('footer_terms'), href: '#' },
+        { label: t('footer_refund'), href: '#' },
+      ],
+    },
+  ]
+}
 
 function SocialIcon({ label, glyph }) {
   return (
@@ -62,6 +65,7 @@ function AppBadge({ platform, label, sub }) {
 
 export default function Footer() {
   const { t } = useLanguage()
+  const COLUMNS = buildColumns(t)
   return (
     <footer className="bg-forest-dark text-parchment/75">
       <div className="mx-auto max-w-7xl px-5 py-14 md:px-8">
@@ -90,16 +94,21 @@ export default function Footer() {
                 {col.title}
               </h4>
               <ul className="mt-4 space-y-2.5">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <Link
-                      to={l.to}
-                      className="text-[13.5px] text-parchment/65 transition hover:text-parchment"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
+                {col.links.map((l) =>
+                  l.to ? (
+                    <li key={l.label}>
+                      <Link to={l.to} className="text-[13.5px] text-parchment/65 transition hover:text-parchment">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li key={l.label}>
+                      <a href={l.href} className="text-[13.5px] text-parchment/65 transition hover:text-parchment">
+                        {l.label}
+                      </a>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           ))}
@@ -107,11 +116,11 @@ export default function Footer() {
           {/* Download app column */}
           <div>
             <h4 className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-turmeric">
-              Get the app
+              {t('footer_col_app')}
             </h4>
             <div className="mt-4 space-y-2.5">
-              <AppBadge platform="ios" sub="Coming soon on" label="App Store" />
-              <AppBadge platform="android" sub="Coming soon on" label="Google Play" />
+              <AppBadge platform="ios" sub={t('footer_coming_soon')} label="App Store" />
+              <AppBadge platform="android" sub={t('footer_coming_soon')} label="Google Play" />
             </div>
           </div>
         </div>

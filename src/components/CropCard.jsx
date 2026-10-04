@@ -10,6 +10,11 @@ const GRADE_STYLE = {
   Organic: 'bg-clay/10 text-clay-dark',
 }
 
+// Grades are a fixed, known set chosen from ListingForm's dropdown (not free
+// text), so they can be translated by value. Anything unexpected falls back
+// to showing the raw stored string rather than disappearing.
+const GRADE_KEY = { Standard: 'grade_standard', Good: 'grade_good', Premium: 'grade_premium', Organic: 'grade_organic' }
+
 // A gradient stand-in for listings without a photo — mirrors the warm
 // photo-header treatment even when there's nothing to show yet.
 const PLACEHOLDER_GRADIENT =
@@ -64,7 +69,7 @@ export default function CropCard({ crop }) {
 
           <div className="flex flex-wrap items-center gap-1.5">
             <span className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${GRADE_STYLE[crop.grade] || 'bg-forest/10 text-forest'}`}>
-              {crop.grade}
+              {GRADE_KEY[crop.grade] ? t(GRADE_KEY[crop.grade]) : crop.grade}
             </span>
             {crop.tags.map((tag) => (
               <span key={tag} className="rounded-md border border-line px-2 py-0.5 text-[11px] font-medium text-ink-soft">
